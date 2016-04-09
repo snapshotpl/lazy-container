@@ -1,0 +1,33 @@
+{
+    "name": "snapshotpl/lazy-container",
+    "description": "Lazy loading container decorator",
+    "type": "library",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Witold Wasiczko",
+            "email": "witold@wasiczko.pl"
+        }
+    ],
+    "require": {
+        "container-interop/container-interop": "^1.0",
+        "ocramius/proxy-manager": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Snapshotpl\\LazyContainer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Snapshotpl\\LazyContainer\\Test\\": "test/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "coverage-html": "phpunit --coverage-html coverage"
+    }
+}
