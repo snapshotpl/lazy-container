@@ -33,44 +33,19 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
 
     public function testInstanceIsNotCreatedBeforeUsage()
     {
-        $isLoaded = false;
-        $this->decoratedContainer->method('get')->with('foo')->willReturnCallback(function() use (&$isLoaded) {
-            $isLoaded = true;
-            return new ArrayObject();
-        });
-
-        $this->container->get('foo');
-
-        $this->assertFalse($isLoaded);
+        $this->assertFalse($this->isLazyLoaded('foo'));
     }
 
     public function testInstanceIsCreatedAfterUsage()
     {
-        $isLoaded = false;
-        $this->decoratedContainer->method('get')->with('foo')->willReturnCallback(function() use (&$isLoaded) {
-            $isLoaded = true;
-            return new ArrayObject();
-        });
-
-        /* @var $object ArrayObject */
-        $object = $this->container->get('foo');
-
-        $object->ksort();
-
-        $this->assertTrue($isLoaded);
+        $this->assertTrue($this->isLazyLoaded('foo', function ($object) {
+            $object->ksort();
+        }));
     }
 
     public function testInstanceIsCreatedBeforeUsageIfNotMapped()
     {
-        $isLoaded = false;
-        $this->decoratedContainer->method('get')->with('bar')->willReturnCallback(function() use (&$isLoaded) {
-            $isLoaded = true;
-            return new ArrayObject();
-        });
-
-        $this->container->get('bar');
-
-        $this->assertTrue($isLoaded);
+        $this->assertTrue($this->isLazyLoaded('bar'));
     }
 
     public function testCheckServiceExistsWorksSameAsDecoratedContainer()
@@ -80,5 +55,21 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
         $result = $this->container->has('boo');
 
         $this->assertTrue($result);
+    }
+
+    protected function isLazyLoaded($name, callable $proxyUsage = null)
+    {
+        $isLoaded = false;
+        $this->decoratedContainer->method('get')->with($name)->willReturnCallback(function() use (&$isLoaded) {
+            $isLoaded = true;
+            return new ArrayObject();
+        });
+
+        $result = $this->container->get($name);
+
+        if ($proxyUsage !== null) {
+            $proxyUsage($result);
+        }
+        return $isLoaded;
     }
 }

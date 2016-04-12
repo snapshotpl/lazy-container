@@ -2,7 +2,6 @@
 
 namespace Snapshotpl\LazyContainer;
 
-use ArrayObject;
 use Interop\Container\ContainerInterface;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\Proxy\LazyLoadingInterface;
@@ -13,8 +12,11 @@ final class LazyContainer implements ContainerInterface
     private $proxyFactory;
     private $classMap;
 
-    public function __construct(ContainerInterface $container, LazyLoadingValueHolderFactory $proxyFactory, array $classMap = [])
-    {
+    public function __construct(
+        ContainerInterface $container,
+        LazyLoadingValueHolderFactory $proxyFactory,
+        array $classMap = []
+    ) {
         $this->container = $container;
         $this->proxyFactory = $proxyFactory;
         $this->classMap = $classMap;

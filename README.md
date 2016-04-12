@@ -6,7 +6,7 @@ Get lazy loadable object from any interop container! Powered by [Proxy Manager](
 ## Usage
 
 ```php
-// Build LazyLoadingValueHolderFactory as you want (remember to
+// Build LazyLoadingValueHolderFactory as you want
 $lazyLoadingFactory = new ProxyManager\Factory\LazyLoadingValueHolderFactory();
 
 // Prepare you favorite container
@@ -21,15 +21,13 @@ $classMap = ['service' => HeavyService::class];
 // Put all things to LazyContainer
 $container = new LazyContainer($pimple, $lazyLoadingFactory, $classMap);
 
-// Use LazyContainer exactly same like other interop container
-
+// Use LazyContainer exactly same like other interop container (thanks for interface)
 $service = $container->get('service');
 
-// Now $service is proxy so it's not created yet
+// Now $service is a proxy, so HeavyService wasn't created yet
 
+// After first usage of $service is real HeavyService!
 $result = $service->doSomethig();
-
-// now $service is real HeavyService!
 ```
 
 ## Installation
