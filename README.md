@@ -1,7 +1,7 @@
 # Lazy-Container [![Build Status](https://travis-ci.org/snapshotpl/lazy-container.svg?branch=master)](https://travis-ci.org/snapshotpl/lazy-container)
 Lazy loading container decorator
 
-Get lazy loadable object from any interop container! Powered by [Proxy Manager](https://github.com/Ocramius/ProxyManager)!
+Get lazy loadable object from any [interop container](https://github.com/container-interop/container-interop)! Powered by [Proxy Manager](https://github.com/Ocramius/ProxyManager)
 
 ## Usage
 
