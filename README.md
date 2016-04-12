@@ -19,7 +19,7 @@ $pimple['service'] = function ($container) {
 $classMap = ['service' => HeavyService::class];
 
 // Put all things to LazyContainer
-$container = new LazyContainer(pimple, $lazyLoadingFactory, $classMap);
+$container = new LazyContainer($pimple, $lazyLoadingFactory, $classMap);
 
 // Use LazyContainer exactly same like other interop container
 
