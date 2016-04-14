@@ -28,11 +28,17 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
 
                 return new ArrayObject();
             },
+            'lazy-with-dependency' => function ($container) {
+                return new \ArrayObject(['foo' => $container->get('foo')]);
+            },
         ];
 
         $this->decoratedContainer = new NanoContainer($factories);
         $lazyLoadingFactory = new LazyLoadingValueHolderFactory();
-        $classMap = ['foo' => ArrayObject::class];
+        $classMap = [
+            'foo' => ArrayObject::class,
+            'lazy-with-dependency' => ArrayObject::class,
+        ];
 
         $this->container = new LazyContainer($this->decoratedContainer, $lazyLoadingFactory, $classMap);
     }
@@ -70,6 +76,13 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
         $result = $this->container->has('foo');
 
         $this->assertTrue($result);
+    }
+
+    public function testInjectedServiceToLazyItsLazy()
+    {
+        $this->container->get('lazy-with-dependency')->ksort();
+
+        $this->assertFalse($this->isInstanceCreated('foo'));
     }
 
     protected function isInstanceCreated($serviceId)
