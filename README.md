@@ -27,7 +27,7 @@ $service = $container->get('service');
 // Now $service is a proxy, so HeavyService wasn't created yet
 
 // After first usage of $service is real HeavyService!
-$result = $service->doSomethig();
+$result = $service->doSomething();
 ```
 
 ## Installation
