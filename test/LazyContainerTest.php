@@ -3,19 +3,34 @@
 namespace Snapshotpl\LazyContainer\Test;
 
 use ArrayObject;
-use Interop\Container\ContainerInterface;
 use PHPUnit_Framework_TestCase;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use Snapshotpl\LazyContainer\LazyContainer;
+use Snapshotpl\NanoContainer\NanoContainer;
 
 class LazyContainerTest extends PHPUnit_Framework_TestCase
 {
     protected $container;
     protected $decoratedContainer;
+    protected $loaded;
 
     protected function setUp()
     {
-        $this->decoratedContainer = $this->getMock(ContainerInterface::class);
+        $this->loaded = null;
+        $factories = [
+            'foo' => function($container, $id) {
+                $this->loaded = $id;
+
+                return new ArrayObject();
+            },
+            'bar' => function ($container, $id) {
+                $this->loaded = $id;
+
+                return new ArrayObject();
+            },
+        ];
+
+        $this->decoratedContainer = new NanoContainer($factories);
         $lazyLoadingFactory = new LazyLoadingValueHolderFactory();
         $classMap = ['foo' => ArrayObject::class];
 
@@ -24,8 +39,6 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
 
     public function testGetExpectedObjectFromContainer()
     {
-        $this->decoratedContainer->method('get')->with('foo')->willReturn(new ArrayObject());
-
         $result = $this->container->get('foo');
 
         $this->assertInstanceOf(ArrayObject::class, $result);
@@ -33,43 +46,34 @@ class LazyContainerTest extends PHPUnit_Framework_TestCase
 
     public function testInstanceIsNotCreatedBeforeUsage()
     {
-        $this->assertFalse($this->isLazyLoaded('foo'));
+        $this->container->get('foo');
+
+        $this->assertFalse($this->isInstanceCreated('foo'));
     }
 
     public function testInstanceIsCreatedAfterUsage()
     {
-        $this->assertTrue($this->isLazyLoaded('foo', function ($object) {
-            $object->ksort();
-        }));
+        $this->container->get('foo')->ksort();
+
+        $this->assertTrue($this->isInstanceCreated('foo'));
     }
 
     public function testInstanceIsCreatedBeforeUsageIfNotMapped()
     {
-        $this->assertTrue($this->isLazyLoaded('bar'));
+        $this->container->get('bar');
+
+        $this->assertTrue($this->isInstanceCreated('bar'));
     }
 
     public function testCheckServiceExistsWorksSameAsDecoratedContainer()
     {
-        $this->decoratedContainer->method('has')->with('boo')->willReturn(true);
-
-        $result = $this->container->has('boo');
+        $result = $this->container->has('foo');
 
         $this->assertTrue($result);
     }
 
-    protected function isLazyLoaded($name, callable $proxyUsage = null)
+    protected function isInstanceCreated($serviceId)
     {
-        $isLoaded = false;
-        $this->decoratedContainer->method('get')->with($name)->willReturnCallback(function() use (&$isLoaded) {
-            $isLoaded = true;
-            return new ArrayObject();
-        });
-
-        $result = $this->container->get($name);
-
-        if ($proxyUsage !== null) {
-            $proxyUsage($result);
-        }
-        return $isLoaded;
+        return $this->loaded === $serviceId;
     }
 }
