@@ -13,6 +13,10 @@ php:
   - 7
   - hhvm
 
+env:
+  - DEPS=lowest
+  - DEPS=latest
+
 before_install:
   - composer self-update
   - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable --no-interaction ; fi
