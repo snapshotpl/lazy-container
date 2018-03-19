@@ -1,7 +1,7 @@
 # Lazy-Container [![Build Status](https://travis-ci.org/snapshotpl/lazy-container.svg?branch=master)](https://travis-ci.org/snapshotpl/lazy-container)
-Lazy loading for interop container
+Lazy loading for PSR-11 container
 
-Get lazy loadable object from any [interop container](https://github.com/container-interop/container-interop)! Powered by [Proxy Manager](https://github.com/Ocramius/ProxyManager)
+Get lazy loadable object from any [PSR-11 container](https://www.php-fig.org/psr/psr-11/meta/)! Powered by [Proxy Manager](https://github.com/Ocramius/ProxyManager)
 
 ## Usage
 
@@ -21,7 +21,7 @@ $classMap = ['service' => HeavyService::class];
 // Put all things to LazyContainer
 $container = new LazyContainer($pimple, $lazyLoadingFactory, $classMap);
 
-// Use LazyContainer exactly same like other interop container (thanks for interface)
+// Use LazyContainer exactly same like other PSR-11 container (thanks for interface)
 $service = $container->get('service');
 
 // Now $service is a proxy, so HeavyService wasn't created yet

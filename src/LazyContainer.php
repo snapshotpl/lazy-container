@@ -2,7 +2,7 @@
 
 namespace Snapshotpl\LazyContainer;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\Proxy\LazyLoadingInterface;
 
