@@ -3,12 +3,12 @@
 namespace Snapshotpl\LazyContainer\Test;
 
 use ArrayObject;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use Snapshotpl\LazyContainer\LazyContainer;
 use Snapshotpl\NanoContainer\NanoContainer;
 
-class LazyContainerTest extends PHPUnit_Framework_TestCase
+class LazyContainerTest extends TestCase
 {
     protected $container;
     protected $decoratedContainer;
