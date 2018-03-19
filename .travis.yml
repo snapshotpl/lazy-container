@@ -17,8 +17,8 @@ env:
   - DEPS=latest
 
 before_install:
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer install --prefer-stable --no-interaction --prefer-lowest ; fi
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer install --prefer-stable --no-interaction ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-stable --no-interaction --prefer-lowest ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update --prefer-stable --no-interaction ; fi
 
 script:
   - composer test
