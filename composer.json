@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.27 || ^6.5.7",
-        "snapshotpl/nano-container": "^1.0"
+        "snapshotpl/nano-container": "^1.0",
+        "container-interop/container-interop": "^1.2.0"
     },
     "autoload": {
         "psr-4": {
