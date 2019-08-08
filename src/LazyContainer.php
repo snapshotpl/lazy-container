@@ -22,6 +22,9 @@ final class LazyContainer implements ContainerInterface
         $this->classMap = $classMap;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function get($id)
     {
         if (!isset($this->classMap[$id])) {
@@ -37,6 +40,9 @@ final class LazyContainer implements ContainerInterface
         return $this->proxyFactory->createProxy($this->classMap[$id], $initializer);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function has($id)
     {
         return $this->container->has($id);
