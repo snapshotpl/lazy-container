@@ -14,7 +14,7 @@ class LazyContainerTest extends TestCase
     protected $decoratedContainer;
     protected $loaded;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->loaded = null;
         $factories = [
@@ -37,42 +37,42 @@ class LazyContainerTest extends TestCase
         $this->container = new LazyContainer($this->decoratedContainer, $lazyLoadingFactory, $classMap);
     }
 
-    public function testGetExpectedObjectFromContainer()
+    public function testGetExpectedObjectFromContainer(): void
     {
         $result = $this->container->get('foo');
 
         $this->assertInstanceOf(ArrayObject::class, $result);
     }
 
-    public function testInstanceIsNotCreatedBeforeUsage()
+    public function testInstanceIsNotCreatedBeforeUsage(): void
     {
         $this->container->get('foo');
 
         $this->assertFalse($this->isInstanceCreated('foo'));
     }
 
-    public function testInstanceIsCreatedAfterUsage()
+    public function testInstanceIsCreatedAfterUsage(): void
     {
         $this->container->get('foo')->ksort();
 
         $this->assertTrue($this->isInstanceCreated('foo'));
     }
 
-    public function testInstanceIsCreatedBeforeUsageIfNotMapped()
+    public function testInstanceIsCreatedBeforeUsageIfNotMapped(): void
     {
         $this->container->get('bar');
 
         $this->assertTrue($this->isInstanceCreated('bar'));
     }
 
-    public function testCheckServiceExistsWorksSameAsDecoratedContainer()
+    public function testCheckServiceExistsWorksSameAsDecoratedContainer(): void
     {
         $result = $this->container->has('foo');
 
         $this->assertTrue($result);
     }
 
-    protected function isInstanceCreated($serviceId)
+    protected function isInstanceCreated(string $serviceId): bool
     {
         return $this->loaded === $serviceId;
     }
