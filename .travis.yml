@@ -7,18 +7,17 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 5.6
-  - 7
-  - 7.1
   - 7.2
+  - 7.3
+  - 7.4snapshot
 
 env:
   - DEPS=lowest
   - DEPS=latest
 
 before_install:
-  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-stable --no-interaction --prefer-lowest ; fi
-  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update --prefer-stable --no-interaction ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --no-interaction --prefer-lowest ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update --no-interaction ; fi
 
 script:
   - composer test

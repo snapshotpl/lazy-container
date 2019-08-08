@@ -2,7 +2,7 @@
     "name": "snapshotpl/lazy-container",
     "description": "Lazy loading PSR-11 container decorator",
     "type": "library",
-    "license": "BSD 3-Clause",
+    "license": "BSD-3-Clause",
     "authors": [
         {
             "name": "Witold Wasiczko",
@@ -10,12 +10,12 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.2",
         "psr/container": "^1.0",
-        "ocramius/proxy-manager": "^1.0 || ^2.0"
+        "ocramius/proxy-manager": "^2.2.2"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7.27 || ^6.5.7",
+        "phpunit/phpunit": "^8.3.3",
         "snapshotpl/nano-container": "^1.0",
         "container-interop/container-interop": "^1.2.0"
     },
